@@ -1,0 +1,30 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "A backend system for instagram clone app",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon server.js"
+  },
+  "author": "Sujoy Karmakar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.20.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "fs": "^0.0.1-security",
+    "helmet": "^6.0.0",
+    "path": "^0.12.7",
+    "pg": "^8.8.0",
+    "sequelize": "^6.25.3",
+    "swagger-ui-express": "^4.5.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.25.0",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.20",
+    "prettier": "2.7.1",
+    "sequelize-cli": "^6.5.1"
+  }
+}
