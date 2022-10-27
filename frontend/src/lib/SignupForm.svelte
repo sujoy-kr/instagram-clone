@@ -16,7 +16,6 @@
         const user = userFactory(username, name, email, password)
         const response = await postAnUser(user)
         console.log(response)
-
     }
 </script>
 

@@ -11,3 +11,8 @@ export async function postAnUser(user) {
     const response = await axios.post(`${baseUrl}/user`, user)
     return response.data
 }
+
+export async function userLogin(user) {
+    const response = await axios.post(`${baseUrl}/user/login`, user)
+    return response.data
+}

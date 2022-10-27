@@ -48,7 +48,7 @@ const loginUser = async (req, res) => {
             }
             const token = jwt.sign(jwtUser)
 
-            res.status(201).json({token})
+            res.status(200).json({token})
         } else {
             res.status(401).json({message: 'user not found'})
         }
