@@ -1,21 +1,21 @@
 <script>
-	import NavItems from '$lib/NavItems.svelte';
-    
+    import NavItems from '$lib/shared/NavItems.svelte';
+
     $: outerWidth = 0
 </script>
 
-<svelte:window bind:outerWidth />
+<svelte:window bind:outerWidth/>
 
-{#if outerWidth < 601}
+{#if outerWidth < 701}
     <div class="footer-nav">
-        <NavItems />
+        <NavItems/>
     </div>
 {/if}
 
 <style>
     .footer-nav {
         position: fixed;
-        bottom:0;
+        bottom: 0;
         width: 100%;
         border-top: 1px solid rgba(0, 0, 0, 0.2);
     }

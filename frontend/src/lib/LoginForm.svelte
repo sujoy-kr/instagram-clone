@@ -11,6 +11,7 @@
             try {
                 const response = await userLogin({username, password})
                 $UserStore.token = response.token
+                // window.localStorage.setItem('token', response.token)
                 await goto('/')
             } catch (e) {
                 alert(e.response.data.message)
