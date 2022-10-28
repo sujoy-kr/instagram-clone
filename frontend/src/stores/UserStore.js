@@ -1,7 +1,5 @@
 import {writable} from "svelte/store";
 
-const UserStore = writable({
-    token: ''
-})
+const UserStore = writable({})
 
 export default UserStore

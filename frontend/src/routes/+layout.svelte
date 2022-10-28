@@ -1,8 +1,9 @@
 <script>
-	import '../app.css';
+    import '../app.css';
+    import '../global.css'
 </script>
 
 <svelte:head>
-	<title>Instagram</title>
+    <title>Instagram</title>
 </svelte:head>
-<slot />
+<slot/>

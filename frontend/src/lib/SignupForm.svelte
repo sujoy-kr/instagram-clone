@@ -1,5 +1,7 @@
 <script>
     import {postAnUser} from '$lib/api.js'
+    import UserStore from "../stores/UserStore.js";
+    import {goto} from "$app/navigation";
 
     const userFactory = (username, name, email, password) => {
         return {
@@ -15,7 +17,9 @@
         const {email, name, username, password} = Object.fromEntries(formData.entries())
         const user = userFactory(username, name, email, password)
         const response = await postAnUser(user)
-        console.log(response)
+        $UserStore.token = response.token
+        $UserStore.username = response.username
+        await goto('/')
     }
 </script>
 
