@@ -1,6 +1,7 @@
 <script>
     import NavItems from '$lib/shared/NavItems.svelte';
 
+
     $: outerWidth = 0
 </script>
 

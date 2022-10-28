@@ -16,3 +16,8 @@ export async function userLogin(user) {
     const response = await axios.post(`${baseUrl}/user/login`, user)
     return response.data
 }
+
+export async function userByUsername(username) {
+    const response = await axios.get(`${baseUrl}/user/${username}`)
+    return response.data
+}
