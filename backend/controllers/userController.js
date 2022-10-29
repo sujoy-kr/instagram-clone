@@ -5,7 +5,7 @@ const config = require('../utils/config')
 
 const getAllUser = async (req, res) => {
     try {
-        const users = await User.findAll()
+        const users = await User.findAll({})
         res.status(200).json(users)
 
     } catch (e) {
