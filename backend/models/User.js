@@ -49,7 +49,15 @@ module.exports = (sequelize, DataTypes) => {
                 msg: 'email already in use'
             }
         },
+        posts: {
+            type: DataTypes.ARRAY(DataTypes.INTEGER),
+            allowNull: true,
+            references: {
+                model: 'post',
+                key: 'post_id'
+            }
+        }
     })
-
+    
     return User
 }
