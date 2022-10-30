@@ -1,7 +1,7 @@
 const {user: User} = require('../models')
 const jwt = require('../utils/jwt')
 const bcrypt = require('bcrypt')
-const config = require('../utils/config')
+const config = require('../utils/env_config')
 
 const getAllUser = async (req, res) => {
     try {

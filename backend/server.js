@@ -1,4 +1,4 @@
-const {PORT} = require('./utils/config')
+const {PORT} = require('./utils/env_config')
 const app = require('./app')
 
 const db = require('./models')

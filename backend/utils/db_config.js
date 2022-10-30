@@ -1,11 +1,11 @@
-const config = require('../utils/config')
+const db_config = require('./env_config')
 
 module.exports = {
     development: {
-        username: config.DB_USERNAME,
-        password: config.DB_PASSWORD,
-        database: config.DB_DATABASE,
-        host: config.DB_HOST,
+        username: db_config.DB_USERNAME,
+        password: db_config.DB_PASSWORD,
+        database: db_config.DB_DATABASE,
+        host: db_config.DB_HOST,
         dialect: 'postgres',
     }, test: {
         username: 'root', password: null, database: 'database_test', host: '127.0.0.1', dialect: 'mysql',

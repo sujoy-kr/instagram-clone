@@ -3,7 +3,7 @@ const cors = require('cors')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 // config files
-const config = require('./utils/config')
+const config = require('./utils/env_config')
 
 const app = express()
 

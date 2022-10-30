@@ -10,7 +10,23 @@ const getAllPosts = async (req, res) => {
     }
 }
 
+const createPost = async (req, res) => {
+    if (req.file) {
+        const url = req.file.path
+        try {
+            const post = await Post.create({url})
+            res.status(201).json(post)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    } else {
+        res.status(400).json({message: 'no image found'})
+    }
+
+}
+
 
 module.exports = {
-    getAllPosts
+    getAllPosts,
+    createPost
 }
