@@ -42,7 +42,7 @@ const postUser = async (req, res) => {
             email: email,
         }).then((user) => {
             const jwtUser = {
-                id: username.user_id,
+                user_id: user.user_id,
                 username: user.username
             }
             const token = jwt.sign(jwtUser)
@@ -70,7 +70,7 @@ const loginUser = async (req, res) => {
 
             if (result) {
                 const jwtUser = {
-                    id: username.user_id,
+                    user_id: user.user_id,
                     username: user.username
                 }
                 const token = jwt.sign(jwtUser)

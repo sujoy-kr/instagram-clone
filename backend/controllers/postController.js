@@ -11,10 +11,12 @@ const getAllPosts = async (req, res) => {
 }
 
 const createPost = async (req, res) => {
+    const user = req.user
+
     if (req.file) {
         const url = req.file.path
         try {
-            const post = await Post.create({url})
+            const post = await Post.create({url, user_id: user.user_id})
             res.status(201).json(post)
         } catch (e) {
             res.status(500).json(e.message)
@@ -24,7 +26,6 @@ const createPost = async (req, res) => {
     }
 
 }
-
 
 module.exports = {
     getAllPosts,

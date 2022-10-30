@@ -16,6 +16,13 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true,
             },
         },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            validate: {
+                notEmpty: true,
+            }
+        }
     })
 
     return Post

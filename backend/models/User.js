@@ -8,6 +8,10 @@ module.exports = (sequelize, DataTypes) => {
             validate: {
                 notEmpty: true,
             },
+            unique: {
+                args: true,
+                msg: 'id already in use'
+            }
         },
         username: {
             type: DataTypes.STRING,
@@ -17,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             unique: {
                 args: true,
-                msg: 'Username already in use!'
+                msg: 'username already in use'
             }
         },
         password: {
@@ -42,7 +46,7 @@ module.exports = (sequelize, DataTypes) => {
             },
             unique: {
                 args: true,
-                msg: 'Email already in use!'
+                msg: 'email already in use'
             }
         },
     })
