@@ -13,6 +13,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: true}))
 
 app.use(require('./routes'))
+app.use('/uploads', express.static(__dirname + '/uploads'))
 
 const isProduction = config.NODE_ENV === 'production'
 
