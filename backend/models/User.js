@@ -53,11 +53,14 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             allowNull: true,
             references: {
-                model: 'post',
+                model: 'Post',
                 key: 'post_id'
             }
         }
+    },
+    {
+        freezeTableName: true,
     })
-    
+
     return User
 }

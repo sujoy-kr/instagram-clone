@@ -23,11 +23,15 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true,
             },
             references: {
-                model: 'user',
+                model: 'User',
                 key: 'user_id'
             }
         }
-    })
+    },
+    {
+        freezeTableName: true,
+    }
+    )
 
     return Post
 }

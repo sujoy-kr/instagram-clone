@@ -1,4 +1,4 @@
-const {user: User} = require('../models')
+const {user: User, post: Post} = require('../models')
 const jwt = require('../utils/jwt')
 const bcrypt = require('bcrypt')
 const config = require('../utils/env_config')
@@ -23,6 +23,12 @@ const getUserByUsername = async (req, res) => {
     })
 
     if (user) {
+        const posts = await Post.findAll({
+            where: {
+                user_id: user.user_id
+            }
+        })
+        user.posts = posts
         res.status(200).json(user)
     } else {
         res.status(404).json({message: 'user not found'})

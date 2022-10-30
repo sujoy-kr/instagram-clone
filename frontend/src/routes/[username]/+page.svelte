@@ -2,7 +2,7 @@
     export let data
     console.log(data.props.user)
     const user = data.props.user
-
+    import {baseUrl} from '$lib/config.js'
     import Navbar from '$lib/Navbar.svelte';
     import FooterNav from '$lib/FooterNav.svelte';
 </script>
@@ -28,12 +28,31 @@
     </ul>
 </div>
 <hr>
+<div class="flex flex-wrap max-w-4xl px-2 py-4 m-auto">
+    {#if user.posts}
+        {#each user.posts as post}
+            <figure class="img-container p-1.5">
+                <img class="w-full each-img m-auto" src="{baseUrl}/{post.url}" alt="{user.name}">
+            </figure>
+        {/each}
+    {/if}
+</div>
+
 
 <FooterNav/>
 
 <style>
     .profile-pic {
         clip-path: circle();
+    }
+
+    .img-container {
+        flex: 0 0 33.33333333%;
+    }
+
+    .each-img {
+        aspect-ratio: 1 / 1;
+        object-fit: cover;
     }
 </style>
 
