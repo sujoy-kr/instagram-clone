@@ -24,7 +24,7 @@ const createPost = async (req, res) => {
             } else {
                 postUser.update({posts: [post.post_id]})
             }
-            console.log(postUser)
+            // console.log(postUser)
             res.status(201).json(post)
         } catch (e) {
             res.status(500).json(e.message)

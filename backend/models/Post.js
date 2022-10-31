@@ -21,10 +21,6 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
             validate: {
                 notEmpty: true,
-            },
-            references: {
-                model: 'User',
-                key: 'user_id'
             }
         }
     },

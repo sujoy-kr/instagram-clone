@@ -1,6 +1,6 @@
 <script>
     export let data
-    console.log(data.props.user)
+    // console.log(data.props.user)
     const user = data.props.user
     import {baseUrl} from '$lib/config.js'
     import Navbar from '$lib/Navbar.svelte';
@@ -9,7 +9,6 @@
 
 
 <Navbar/>
-
 <div class="flex container items-center m-auto px-4 py-8 gap-8">
     <figure class="w-32">
         <img class="w-full profile-pic" src="/shrek.jpg" alt="{user.name}">
@@ -22,9 +21,16 @@
 <div>
     <hr>
     <ul class="flex justify-center p-4 gap-12">
-        <li class="text-md text-center leading-5 text-slate-600"><b>{5}</b> <br> posts</li>
-        <li class="text-md text-center leading-5 text-slate-600"><b>{5}</b> <br> followers</li>
-        <li class="text-md text-center leading-5 text-slate-600"><b>{5}</b> <br> following</li>
+        <li class="text-md text-center leading-5 text-slate-600"><b>{user.posts ? user.posts.length : 0}</b> <br> posts
+        </li>
+        <li class="text-md text-center leading-5 text-slate-600"><b>{user.followers ? user.followers.length : 0}</b>
+            <br>
+            followers
+        </li>
+        <li class="text-md text-center leading-5 text-slate-600"><b>{user.followings ? user.followings.length : 0}</b>
+            <br>
+            following
+        </li>
     </ul>
 </div>
 <hr>
@@ -37,8 +43,6 @@
         {/each}
     {/if}
 </div>
-
-
 <FooterNav/>
 
 <style>
