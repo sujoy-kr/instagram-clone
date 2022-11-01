@@ -42,14 +42,22 @@ const getFeed = async (req, res) => {
     try {
         for (const id of followedUsersId) {
             const user = await User.findOne({where: {user_id: id}})
+            const userCopy = {
+                username: user.username,
+            }
             const postIDs = user.posts
             for (const id of postIDs) {
                 const post = await Post.findOne({where: {post_id: id}})
-                feed.push(post)
+                let postCopy = {
+                    ...post.dataValues
+                }
+                postCopy.owner = userCopy
+                console.log(postCopy)
+                feed.push(postCopy)
             }
         }
         // console.log('feed', feed)
-        res.status(200).json({feed})
+        res.status(200).json(feed)
     } catch (e) {
         res.status(500).json({message: e.message})
     }

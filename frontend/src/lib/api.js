@@ -33,3 +33,13 @@ export async function postAPost(post) {
         })
     return response.data
 }
+
+export async function getFeed() {
+    const response = await axios.get(`${baseUrl}/api/post/feed`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+    return response.data
+}
