@@ -1,6 +1,10 @@
 <script>
     import NavItems from '$lib/shared/NavItems.svelte';
+    import {goto} from '$app/navigation';
 
+    const gotoHome = () => {
+        goto('/');
+    };
 
     $: outerWidth = 0
 </script>
@@ -9,7 +13,7 @@
 
 <div class="border bg-white">
     <nav class="container m-auto flex flex-row items-center justify-evenly h-14 p-1">
-        <figure class="flex justify-center w-1/3">
+        <figure on:click={gotoHome} class="flex justify-center w-1/3 cursor-pointer">
             <svg aria-label="Instagram" class="_ab6-" color="#262626" fill="#262626" height="29" role="img"
                  viewBox="32 4 113 32" width="103">
                 <path clip-rule="evenodd"

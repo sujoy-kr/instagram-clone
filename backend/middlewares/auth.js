@@ -1,4 +1,4 @@
-const {verify} = require('./jwt')
+const {verify} = require('../utils/jwt')
 
 const required = (req, res, next) => {
     if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token' ||
