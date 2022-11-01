@@ -4,4 +4,10 @@ body {
     font-family: 'Roboto', sans-serif;
     user-select: none;
     background-color: #FAFAFA !important;
+    ms-overflow-style: none; /* Internet Explorer 10+ */
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
 }
