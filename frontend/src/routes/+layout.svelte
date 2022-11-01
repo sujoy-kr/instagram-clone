@@ -2,14 +2,12 @@
     import '../app.css';
     import '../global.css'
 
-
-    import UserStore from '../stores/UserStore.js'
     import {goto} from '$app/navigation';
     import {onMount} from 'svelte';
 
-    $: userToken = $UserStore.token;
 
     onMount(() => {
+        let userToken = window.localStorage.getItem('token');
         if (!userToken) {
             goto('/login');
         }

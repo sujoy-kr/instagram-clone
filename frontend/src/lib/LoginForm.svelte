@@ -1,7 +1,6 @@
 <script>
     import {userLogin} from '$lib/api.js'
     import {goto} from '$app/navigation';
-    import UserStore from "../stores/UserStore.js";
 
     const handleLogin = async (e) => {
         const formData = new FormData(e.target)
@@ -10,8 +9,8 @@
         if (username && password) {
             try {
                 const response = await userLogin({username, password})
-                $UserStore.token = response.token
-                $UserStore.username = response.username
+                window.localStorage.setItem('token', response.token)
+                window.localStorage.setItem('username', response.username)
                 await goto('/')
             } catch (e) {
                 alert(e.response.data.message)
