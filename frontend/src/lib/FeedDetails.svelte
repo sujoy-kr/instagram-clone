@@ -3,10 +3,10 @@
     import {baseUrl} from '$lib/config.js'
 </script>
 
-<figure class="bg-white rounded-md overflow-hidden mb-8">
+<figure class="bg-white rounded-sm overflow-hidden mb-8">
     <div class="flex p-3 items-center gap-4">
-        <img class="w-10 profile-pic" src="./shrek.jpg" alt="">
-        <p class="text-sm">{post.owner.username}</p>
+        <img class="w-10 profile-pic" src="./shrek.jpg" alt="{post.owner.username}">
+        <a href="/{post.owner.username}" class="text-sm">{post.owner.username}</a>
     </div>
     <img class="" src="{baseUrl}/{post.url}" alt={post.owner.username}/>
 </figure>

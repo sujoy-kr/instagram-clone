@@ -52,11 +52,9 @@ const getFeed = async (req, res) => {
                     ...post.dataValues
                 }
                 postCopy.owner = userCopy
-                console.log(postCopy)
                 feed.push(postCopy)
             }
         }
-        // console.log('feed', feed)
         res.status(200).json(feed)
     } catch (e) {
         res.status(500).json({message: e.message})

@@ -9,7 +9,6 @@ const server = http.createServer(app);
 // connect to database and log if error
 (async () => {
     try {
-
         await db.sequelize.sync()
     } catch (e) {
         console.log(e)

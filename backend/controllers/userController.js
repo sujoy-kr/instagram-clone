@@ -40,7 +40,6 @@ const postUser = async (req, res) => {
 
     if (username && password && name && email) {
         const hashedPass = await bcrypt.hash(password, config.SALT_ROUND)
-        // console.log(hashedPass)
         await User.create({
             username: username,
             password: hashedPass,
@@ -110,7 +109,6 @@ const followToggle = async (req, res) => {
             username: user.username
         }
     })
-    console.log(userToFollow.username, currentUser.username)
 
     // check if the user to follow exists and toggle the following status
     if (userToFollow && currentUser) {

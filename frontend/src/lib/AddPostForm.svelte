@@ -9,9 +9,8 @@
             await postAPost(data);
             goto(`/${window.localStorage.getItem("username")}`);
         } catch (error) {
-            console.log(error);
+            alert(error);
         }
-
     }
 </script>
 
