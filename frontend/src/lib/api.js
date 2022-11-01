@@ -25,11 +25,10 @@ export async function userByUsername(username) {
 
 // post API
 export async function postAPost(post) {
-    const response = await axios.post(`${baseUrl}/api/post`,
-        post,
+    const response = await axios.post(`${baseUrl}/api/post`, post,
         {
             headers: {
-                'Authorization': `Bearer ${localStorage.getItem('token')}`
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
         })
     return response.data
