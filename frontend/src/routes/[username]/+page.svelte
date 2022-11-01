@@ -7,6 +7,9 @@
     import FooterNav from '$lib/FooterNav.svelte';
 </script>
 
+<svelte:head>
+    <title>{user.name} (@{user.username}) | Instagram photos</title>
+</svelte:head>
 
 <Navbar/>
 <div class="flex container items-center m-auto px-4 py-8 gap-8">

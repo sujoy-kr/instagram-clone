@@ -24,7 +24,6 @@ const createPost = async (req, res) => {
             } else {
                 postUser.update({posts: [post.post_id]})
             }
-            // console.log(postUser)
             res.status(201).json(post)
         } catch (e) {
             res.status(500).json(e.message)
@@ -35,7 +34,29 @@ const createPost = async (req, res) => {
 
 }
 
+const getFeed = async (req, res) => {
+    const user = req.user
+    const currentUser = await User.findOne({where: {user_id: user.user_id, username: user.username}})
+    const followedUsersId = currentUser.followings
+    let feed = []
+    try {
+        for (const id of followedUsersId) {
+            const user = await User.findOne({where: {user_id: id}})
+            const postIDs = user.posts
+            for (const id of postIDs) {
+                const post = await Post.findOne({where: {post_id: id}})
+                feed.push(post)
+            }
+        }
+        // console.log('feed', feed)
+        res.status(200).json({feed})
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+}
+
 module.exports = {
     getAllPosts,
-    createPost
+    createPost,
+    getFeed
 }

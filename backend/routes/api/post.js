@@ -5,5 +5,6 @@ const auth = require('../../middlewares/auth')
 
 router.get('/', postController.getAllPosts)
 router.post('/', auth.required, multerMiddleware, postController.createPost)
+router.get('/feed', auth.required, postController.getFeed)
 
 module.exports = router
