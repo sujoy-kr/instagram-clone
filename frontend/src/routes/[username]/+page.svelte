@@ -7,24 +7,31 @@
 
     $: params = $page.params
     $: username = params.username
+    let loading = true
 
     $: user = null
     const trackUsernameChange = async (username) => {
         try {
             user = await userByUsername(username)
+            loading = false
         } catch (e) {
+            loading = false
             user = null
         }
     }
 
     $: trackUsernameChange(username)
 
-
 </script>
 
 <Navbar/>
 
-{#if user}
+{#if loading}
+    <p class="text-center text-3xl text-slate-500 py-20">
+        Loading ...
+    </p>
+
+{:else if user && !loading}
     <div class="flex container items-center m-auto px-4 py-8 gap-8">
         <figure class="">
             <img class="profile-pic" src={user.image? `${baseUrl}/${user.image}`:"/shrek.jpg"} alt="{user.name}">
