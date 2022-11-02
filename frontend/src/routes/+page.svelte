@@ -5,10 +5,12 @@
     import {getFeed} from '$lib/api.js';
     import FeedList from "$lib/FeedList.svelte";
 
-    let feed = []
+    let feed = null
+    let loading = true
 
     onMount(async () => {
         feed = await getFeed();
+        loading = false
     });
 
 
@@ -16,5 +18,13 @@
 
 
 <Navbar/>
-<FeedList posts={feed}/>
+
+{#if loading}
+    <p class="text-center text-3xl text-slate-500 py-20">
+        Loading ...
+    </p>
+{:else}
+    <FeedList posts={feed}/>
+{/if}
+
 <FooterNav/>

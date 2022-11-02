@@ -2,6 +2,7 @@ const {user: User, post: Post} = require('../models')
 const jwt = require('../utils/jwt')
 const bcrypt = require('bcrypt')
 const config = require('../utils/env_config')
+const fs = require('fs')
 
 const getAllUser = async (req, res) => {
     try {
@@ -168,10 +169,54 @@ const followToggle = async (req, res) => {
     }
 }
 
+const updateUser = async (req, res) => {
+    const user = req.user
+    const username = req.params.username
+
+    if (user.username === username) {
+        let {name, bio} = req.body
+
+        name = name || null
+        bio = bio || null
+        let image = null
+
+        if (req.file) {
+            image = req.file.path
+        }
+
+        const userToUpdate = await User.findOne({
+            where: {
+                user_id: user.user_id
+            }
+        })
+        
+        if (userToUpdate) {
+            userToUpdate.name = name || userToUpdate.name
+            userToUpdate.bio = bio || userToUpdate.bio
+            if (userToUpdate.image && image) {
+                // delete previous image if it exists
+                fs.unlinkSync(userToUpdate.image)
+                userToUpdate.image = image
+            }
+
+            userToUpdate.save()
+            res.status(200).json({message: 'user updated'})
+        } else {
+            res.status(404).json({message: 'user not found'})
+        }
+
+    } else {
+        res.status(401).json({message: 'you can only update your own profile'})
+    }
+
+}
+
+
 module.exports = {
     getAllUser,
     postUser,
     loginUser,
     getUserByUsername,
-    followToggle
+    followToggle,
+    updateUser
 }

@@ -5,7 +5,8 @@
 
 <figure class="bg-white rounded-sm overflow-hidden mb-8">
     <div class="flex p-3 items-center gap-4">
-        <img class="w-10 profile-pic" src="./shrek.jpg" alt="{post.owner.username}">
+        <img class="profile-pic" src={post.owner.image? `${baseUrl}/${post.owner.image}`:"/shrek.jpg"}
+             alt="{post.owner.username}">
         <a href="/{post.owner.username}" class="text-sm">{post.owner.username}</a>
     </div>
     <img class="" src="{baseUrl}/{post.url}" alt={post.owner.username}/>
@@ -14,6 +15,9 @@
 <style>
     .profile-pic {
         clip-path: circle();
+        object-fit: cover;
+        height: 40px;
+        width: 40px;
     }
 
     figure {

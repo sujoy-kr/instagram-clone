@@ -43,3 +43,14 @@ export async function getFeed() {
         })
     return response.data
 }
+
+export async function updateAnUser(data) {
+    const response = await axios.put(`${baseUrl}/api/user/${localStorage.getItem('username')}`, data,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+    )
+    return response.data
+}

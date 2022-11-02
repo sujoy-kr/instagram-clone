@@ -37,27 +37,36 @@ const createPost = async (req, res) => {
 const getFeed = async (req, res) => {
     const user = req.user
     const currentUser = await User.findOne({where: {user_id: user.user_id, username: user.username}})
-    const followedUsersId = currentUser.followings
-    let feed = []
-    try {
-        for (const id of followedUsersId) {
-            const user = await User.findOne({where: {user_id: id}})
-            const userCopy = {
-                username: user.username,
-            }
-            const postIDs = user.posts
-            for (const id of postIDs) {
-                const post = await Post.findOne({where: {post_id: id}})
-                let postCopy = {
-                    ...post.dataValues
+    if (currentUser) {
+        const followedUsersId = currentUser.followings
+        if (followedUsersId) {
+            let feed = []
+            try {
+                for (const id of followedUsersId) {
+                    const user = await User.findOne({where: {user_id: id}})
+                    const userCopy = {
+                        username: user.username,
+                        image: user.image,
+                    }
+                    const postIDs = user.posts
+                    for (const id of postIDs) {
+                        const post = await Post.findOne({where: {post_id: id}})
+                        let postCopy = {
+                            ...post.dataValues
+                        }
+                        postCopy.owner = userCopy
+                        feed.push(postCopy)
+                    }
                 }
-                postCopy.owner = userCopy
-                feed.push(postCopy)
+                res.status(200).json(feed)
+            } catch (e) {
+                res.status(500).json({message: e.message})
             }
+        } else {
+            res.status(200).json([])
         }
-        res.status(200).json(feed)
-    } catch (e) {
-        res.status(500).json({message: e.message})
+    } else {
+        res.status(404).json({message: 'user not found'})
     }
 }
 

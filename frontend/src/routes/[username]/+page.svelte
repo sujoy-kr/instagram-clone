@@ -26,12 +26,18 @@
 
 {#if user}
     <div class="flex container items-center m-auto px-4 py-8 gap-8">
-        <figure class="w-32">
-            <img class="w-full profile-pic" src="/shrek.jpg" alt="{user.name}">
+        <figure class="">
+            <img class="profile-pic" src={user.image? `${baseUrl}/${user.image}`:"/shrek.jpg"} alt="{user.name}">
         </figure>
         <div>
-            <h1 class="text-xl">{user.username}</h1>
-            <p class="text-sm text-slate-400">{user.name}</p>
+            <h1 class="text-xl">{user.username} <span class="text-sm text-slate-400">({user.name})</span></h1>
+
+            {#if user.bio}
+                <p class="text-sm text-slate-600 my-2">{user.bio}</p>
+            {/if}
+        </div>
+        <div>
+
         </div>
     </div>
     <div>
@@ -56,7 +62,7 @@
         {#if user.posts}
             {#each user.posts as post}
                 <figure class="img-container p-1.5">
-                    <img class="w-full each-img m-auto" src="{baseUrl}/{post.url}" alt="{user.name}">
+                    <img class="each-img m-auto" src="{baseUrl}/{post.url}" alt="{user.name}">
                 </figure>
             {/each}
         {/if}
@@ -65,14 +71,16 @@
     <p class="text-center text-3xl text-slate-600 pt-20 pb-2">¯\_(ツ)_/¯</p>
     <p class="text-center text-8xl font-semibold text-slate-600">404</p>
     <p class="text-center text-2xl text-slate-600 pb-20">Page Not Found</p>
-
-
 {/if}
 
 <FooterNav/>
 
 <style>
     .profile-pic {
+        object-fit: cover;
+        height: 100px;
+        width: 100px;
+        /*width: 100%;*/
         clip-path: circle();
     }
 

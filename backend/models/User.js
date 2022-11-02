@@ -16,8 +16,9 @@ module.exports = (sequelize, DataTypes) => {
         username: {
             type: DataTypes.STRING,
             allowNull: false,
-            validate: {
-                notEmpty: true,
+            notEmpty: {
+                args: true,
+                msg: 'username cannot be empty'
             },
             unique: {
                 args: true,
@@ -28,21 +29,42 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
+                notEmpty: {
+                    args: true,
+                    msg: 'password cannot be empty'
+                },
+                min: {
+                    args: 8,
+                    msg: 'password must be at least 8 characters long'
+                }
             },
         },
         name: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
+                notEmpty: {
+                    args: true,
+                    msg: 'name cannot be empty'
+                },
             },
+        },
+        bio: {
+            type: DataTypes.STRING,
+            allowNull: true,
+        },
+        image: {
+            type: DataTypes.STRING,
+            allowNull: true,
         },
         email: {
             type: DataTypes.STRING,
             allowNull: false,
             validate: {
-                notEmpty: true,
+                notEmpty: {
+                    args: true,
+                    msg: 'email cannot be empty'
+                },
             },
             unique: {
                 args: true,

@@ -1,6 +1,27 @@
+<script>
+    import {updateAnUser} from "$lib/api.js"
+    import {goto} from "$app/navigation";
+
+
+    const handleUpdate = async (e) => {
+        e.preventDefault();
+        const data = new FormData(e.target);
+        try {
+            await updateAnUser(data);
+            goto(`/${window.localStorage.getItem("username")}`);
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+</script>
+
+
 <div class="p-4 ">
     <form class="bg-white rounded-md max-w-fit p-4 mx-auto my-4"
-          enctype="multipart/form-data">
+          enctype="multipart/form-data"
+          on:submit|preventDefault={handleUpdate}>
+
         <div class="flex flex-col">
             <div class="text-right w-full mb-4">
                 <label for="name">Name: </label>
