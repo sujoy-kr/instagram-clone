@@ -27,7 +27,10 @@ const getUserByUsername = async (req, res) => {
         const posts = await Post.findAll({
             where: {
                 user_id: user.user_id
-            }
+            },
+            order: [
+                ['createdAt', 'DESC']
+            ]
         })
         user.posts = posts
         res.status(200).json(user)
@@ -189,7 +192,7 @@ const updateUser = async (req, res) => {
                 user_id: user.user_id
             }
         })
-        
+
         if (userToUpdate) {
             userToUpdate.name = name || userToUpdate.name
             userToUpdate.bio = bio || userToUpdate.bio

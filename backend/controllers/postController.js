@@ -58,6 +58,10 @@ const getFeed = async (req, res) => {
                         feed.push(postCopy)
                     }
                 }
+                feed.sort((a, b) => {
+                    return new Date(b.createdAt) - new Date(a.createdAt)
+                })
+
                 res.status(200).json(feed)
             } catch (e) {
                 res.status(500).json({message: e.message})
