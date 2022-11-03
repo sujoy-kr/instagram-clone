@@ -187,6 +187,8 @@ const updateUser = async (req, res) => {
             image = req.file.path
         }
 
+        console.log(image)
+
         const userToUpdate = await User.findOne({
             where: {
                 user_id: user.user_id
@@ -199,8 +201,12 @@ const updateUser = async (req, res) => {
             if (userToUpdate.image && image) {
                 // delete previous image if it exists
                 fs.unlinkSync(userToUpdate.image)
+            }
+
+            if (image) {
                 userToUpdate.image = image
             }
+
 
             userToUpdate.save()
             res.status(200).json({message: 'user updated'})
