@@ -4,6 +4,7 @@
     import FooterNav from '$lib/FooterNav.svelte';
     import {page} from '$app/stores'
     import {userByUsername} from '$lib/api.js'
+    import {goto} from '$app/navigation';
 
     $: params = $page.params
     $: username = params.username
@@ -32,19 +33,22 @@
     </p>
 
 {:else if user && !loading}
-    <div class="flex container items-center m-auto px-4 py-8 gap-8">
-        <figure class="">
+    <div class="flex container items-center m-auto px-4 py-8 gap-4">
+        <figure class="w-28">
             <img class="profile-pic" src={user.image? `${baseUrl}/${user.image}`:"/shrek.jpg"} alt="{user.name}">
         </figure>
-        <div>
+        <div class="namebio w-96">
             <h1 class="text-xl">{user.username} <span class="text-sm text-slate-400">({user.name})</span></h1>
 
             {#if user.bio}
                 <p class="text-sm text-slate-600 my-2">{user.bio}</p>
             {/if}
-        </div>
-        <div>
 
+            {#if user.username === window.localStorage.getItem('username')}
+                <button on:click={()=> goto('/editprofile')} class="editprofile text-sm py-1 mt-2 px-4">Edit
+                    profile
+                </button>
+            {/if}
         </div>
     </div>
     <div>
@@ -85,9 +89,8 @@
 <style>
     .profile-pic {
         object-fit: cover;
-        height: 100px;
-        width: 100px;
-        /*width: 100%;*/
+        height: 100px !important;
+        width: 100px !important;
         clip-path: circle();
     }
 
@@ -98,6 +101,25 @@
     .each-img {
         aspect-ratio: 1 / 1;
         object-fit: cover;
+    }
+
+    @media only screen and (max-width: 600px) {
+        .namebio {
+            width: 200px;
+        }
+
+        .namebio h1 {
+            font-size: 16px;
+        }
+
+        .namebio h1 span {
+            font-size: 12px;
+        }
+    }
+
+    .editprofile {
+        border: 1px solid rgb(219, 219, 219);
+        border-radius: 3px;
     }
 </style>
 

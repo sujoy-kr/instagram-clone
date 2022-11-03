@@ -14,6 +14,12 @@
         }
     }
 
+    const handleLogOut = () => {
+        window.localStorage.removeItem('token')
+        window.localStorage.removeItem('username')
+        goto('/login')
+    }
+
 </script>
 
 
@@ -45,6 +51,12 @@
             </button>
         </div>
     </form>
+    <div class="text-center mt-4 mb-2">
+        <button on:click={handleLogOut}
+                class="px-8 py-2 text-sm bg-rose-500 tracking-wide rounded-md text-white font-semibold"
+                type="submit">Log out
+        </button>
+    </div>
 </div>
 
 
