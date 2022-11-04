@@ -14,6 +14,26 @@ const getAllUser = async (req, res) => {
     }
 }
 
+const getLastTenUsers = async (req, res) => {
+    const user = req.user
+
+    try {
+        const lastTen = await User.findAll({
+            limit: 10,
+            order: [
+                ['createdAt', 'DESC'],
+            ]
+        })
+
+        // remove the current user
+        const filtered = lastTen.filter(each => each.user_id !== user.user_id)
+        res.status(200).json(filtered)
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+}
+
+
 const getUserByUsername = async (req, res) => {
     const {username} = req.params
 
@@ -220,12 +240,12 @@ const updateUser = async (req, res) => {
 
 }
 
-
 module.exports = {
     getAllUser,
     postUser,
     loginUser,
     getUserByUsername,
     followToggle,
-    updateUser
+    updateUser,
+    getLastTenUsers
 }

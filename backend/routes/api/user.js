@@ -5,6 +5,7 @@ const {multerMiddleware} = require('../../middlewares/multer')
 
 router.get('/', userController.getAllUser)
 router.post('/', userController.postUser)
+router.get('/lastten', auth.required, userController.getLastTenUsers)
 router.put('/:username', auth.required, multerMiddleware, userController.updateUser)
 router.post('/login', userController.loginUser)
 router.get('/:username', userController.getUserByUsername)

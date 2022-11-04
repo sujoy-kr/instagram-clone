@@ -2,8 +2,13 @@ import axios from 'axios'
 import {baseUrl} from '$lib/config.js'
 
 // user API
-export async function getAllUsers() {
-    const response = await axios.get(`${baseUrl}/api/user`)
+export async function getLastTenUsers() {
+    const response = await axios.get(`${baseUrl}/api/user/lastten`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
     return response.data
 }
 
@@ -22,6 +27,16 @@ export async function userByUsername(username) {
     return response.data
 }
 
+export async function updateAnUser(data) {
+    const response = await axios.put(`${baseUrl}/api/user/${localStorage.getItem('username')}`, data,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        }
+    )
+    return response.data
+}
 
 // post API
 export async function postAPost(post) {
@@ -44,13 +59,3 @@ export async function getFeed() {
     return response.data
 }
 
-export async function updateAnUser(data) {
-    const response = await axios.put(`${baseUrl}/api/user/${localStorage.getItem('username')}`, data,
-        {
-            headers: {
-                'Authorization': 'Bearer ' + localStorage.getItem('token')
-            }
-        }
-    )
-    return response.data
-}
