@@ -2,8 +2,12 @@
     import '../app.css';
     import '../global.css'
 
+    import FooterNav from '$lib/FooterNav.svelte'
+    import Navbar from '$lib/Navbar.svelte'
+
     import {goto} from '$app/navigation';
     import {onMount} from 'svelte';
+    import {page} from "$app/stores";
 
 
     onMount(() => {
@@ -17,4 +21,11 @@
 <svelte:head>
     <title>Instagram</title>
 </svelte:head>
-<slot/>
+
+{#if $page.url.pathname !== '/login' && $page.url.pathname !== '/signup'}
+    <Navbar/>
+    <slot/>
+    <FooterNav/>
+{:else}
+    <slot/>
+{/if}

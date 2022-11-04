@@ -90,5 +90,14 @@ module.exports = (sequelize, DataTypes) => {
         freezeTableName: true,
     })
 
+    User.prototype.toJSON = function () {
+        let values = Object.assign({}, this.get())
+
+        delete values.password
+        delete values.updatedAt
+        delete values.createdAt
+        return values
+    }
+
     return User
 }

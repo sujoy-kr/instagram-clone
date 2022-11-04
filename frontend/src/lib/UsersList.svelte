@@ -7,7 +7,6 @@
     onMount(
         async () => {
             users = await getLastTenUsers()
-            // console.log(users)
         }
     )
 

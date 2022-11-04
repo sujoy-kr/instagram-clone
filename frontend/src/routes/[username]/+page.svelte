@@ -1,7 +1,5 @@
 <script>
     import {baseUrl} from '$lib/config.js'
-    import Navbar from '$lib/Navbar.svelte';
-    import FooterNav from '$lib/FooterNav.svelte';
     import {page} from '$app/stores'
     import {userByUsername} from '$lib/api.js'
     import {goto} from '$app/navigation';
@@ -25,8 +23,6 @@
 
 </script>
 
-<Navbar/>
-
 {#if loading}
     <p class="text-center text-3xl text-slate-500 py-20">
         Loading ...
@@ -38,10 +34,10 @@
             <img class="profile-pic" src={user.image? `${baseUrl}/${user.image}`:"/shrek.jpg"} alt="{user.name}">
         </figure>
         <div class="namebio w-96">
-            <h1 class="text-xl">{user.username} <span class="text-sm text-slate-400">({user.name})</span></h1>
+            <h1 class="text-xl mb-2">{user.username} <span class="text-sm text-slate-400">({user.name})</span></h1>
 
             {#if user.bio}
-                <p class="text-sm text-slate-600 my-2">{user.bio}</p>
+                <p class="text-sm text-slate-600">{user.bio}</p>
             {/if}
 
             {#if user.username === window.localStorage.getItem('username')}
@@ -84,7 +80,6 @@
     <p class="text-center text-2xl text-slate-600 pb-20">Page Not Found</p>
 {/if}
 
-<FooterNav/>
 
 <style>
     .profile-pic {
@@ -103,6 +98,12 @@
         object-fit: cover;
     }
 
+    .editprofile {
+        border: 1px solid rgb(219, 219, 219);
+        border-radius: 3px;
+        margin-top: 1rem;
+    }
+
     @media only screen and (max-width: 600px) {
         .namebio {
             width: 200px;
@@ -110,16 +111,18 @@
 
         .namebio h1 {
             font-size: 16px;
+            margin-bottom: 0;
         }
 
         .namebio h1 span {
             font-size: 12px;
         }
+
+        .editprofile {
+            margin-top: .25rem;
+        }
     }
 
-    .editprofile {
-        border: 1px solid rgb(219, 219, 219);
-        border-radius: 3px;
-    }
+
 </style>
 

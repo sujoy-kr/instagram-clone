@@ -1,6 +1,4 @@
 <script>
-    import FooterNav from '$lib/FooterNav.svelte';
-    import Navbar from '$lib/Navbar.svelte';
     import {onMount} from 'svelte';
     import {getFeed} from '$lib/api.js';
     import FeedList from "$lib/FeedList.svelte";
@@ -21,8 +19,6 @@
 </script>
 
 
-<Navbar/>
-
 {#if loading}
     <p class="text-center text-3xl text-slate-500 py-20">
         Loading ...
@@ -35,4 +31,3 @@
     <UsersList/>
 {/if}
 
-<FooterNav/>

@@ -24,7 +24,7 @@
                       fill="currentColor" fill-rule="evenodd"></path>
             </svg>
         </figure>
-        <form class="text-center w-1/3">
+        <form class="text-center w-1/3" action="/search">
             <input class="text-sm w-full focus:outline-none rounded-md bg-slate-100 p-2" type="text" name="search"
                    placeholder="Search"/>
         </form>

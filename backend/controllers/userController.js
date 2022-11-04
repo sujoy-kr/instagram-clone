@@ -3,6 +3,7 @@ const jwt = require('../utils/jwt')
 const bcrypt = require('bcrypt')
 const config = require('../utils/env_config')
 const fs = require('fs')
+const {Op} = require('sequelize')
 
 const getAllUser = async (req, res) => {
     try {
@@ -207,8 +208,6 @@ const updateUser = async (req, res) => {
             image = req.file.path
         }
 
-        console.log(image)
-
         const userToUpdate = await User.findOne({
             where: {
                 user_id: user.user_id
@@ -237,7 +236,37 @@ const updateUser = async (req, res) => {
     } else {
         res.status(401).json({message: 'you can only update your own profile'})
     }
+}
 
+const getSearchedUsers = async (req, res) => {
+    const keyword = req.params.keyword
+    if (keyword) {
+        const users = await User.findAll({
+            where: {
+
+                // or name
+                [Op.or]: [
+                    {
+                        username: {
+                            [Op.like]: `%${keyword}%`
+                        },
+                    },
+                    {
+                        name: {
+                            [Op.like]: `%${keyword}%`
+                        },
+                    }
+                ]
+            },
+            order: [
+                ['createdAt', 'DESC']
+            ]
+        })
+
+        res.status(200).json(users)
+    } else {
+        res.status(400).json({message: 'keyword can\'t be empty'})
+    }
 }
 
 module.exports = {
@@ -247,5 +276,6 @@ module.exports = {
     getUserByUsername,
     followToggle,
     updateUser,
-    getLastTenUsers
+    getLastTenUsers,
+    getSearchedUsers
 }
