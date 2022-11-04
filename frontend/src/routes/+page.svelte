@@ -28,6 +28,7 @@
 {/if}
 
 {#if !loading && loadLastTen}
+
     <UsersList/>
 {/if}
 

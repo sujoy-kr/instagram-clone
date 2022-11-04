@@ -13,7 +13,7 @@
         {/each}
     </ul>
 {:else}
-    <p class="text-center text-3xl text-slate-500 py-20">
+    <p class="text-center text-3xl text-slate-500 py-20 px-4">
         No posts found. Follow some users to get started.
     </p>
 {/if}
