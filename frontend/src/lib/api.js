@@ -49,6 +49,15 @@ export async function getSearchedUser(keyword) {
     return response.data
 }
 
+export async function toggleFollow(username) {
+    const response = await axios.get(`${baseUrl}/api/user/${username}/follow`, {
+        headers: {
+            'Authorization': 'Bearer ' + localStorage.getItem('token')
+        }
+    })
+    return response.data
+}
+
 // post API
 export async function postAPost(post) {
     const response = await axios.post(`${baseUrl}/api/post`, post,

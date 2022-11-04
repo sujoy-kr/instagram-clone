@@ -1,25 +1,54 @@
 <script>
     import {baseUrl} from '$lib/config.js'
     import {page} from '$app/stores'
-    import {userByUsername} from '$lib/api.js'
+    import {userByUsername, toggleFollow} from '$lib/api.js'
     import {goto} from '$app/navigation';
+    import {onMount} from "svelte";
 
+    // gets the username from the URL
     $: params = $page.params
     $: username = params.username
+
+    $: user_id = null
+
     let loading = true
 
+    // get user data and track loading state
     $: user = null
     const trackUsernameChange = async (username) => {
         try {
             user = await userByUsername(username)
+            console.log(user)
             loading = false
         } catch (e) {
             loading = false
             user = null
         }
     }
-
     $: trackUsernameChange(username)
+
+    // follow/unfollow user
+    let followingStatus = false
+
+    $: if (user && user.followers) {
+        followingStatus = user.followers.includes(+user_id)
+        console.log(followingStatus)
+    }
+
+    const handleFollowToggle = async () => {
+        try {
+            await toggleFollow(user.username)
+            user = await userByUsername(username)
+            console.log(user)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
+    onMount(async () => {
+        user_id = localStorage.getItem('user_id')
+    })
+
 
 </script>
 
@@ -43,6 +72,12 @@
             {#if user.username === window.localStorage.getItem('username')}
                 <button on:click={()=> goto('/editprofile')} class="editprofile text-sm py-1 mt-2 px-4">Edit
                     profile
+                </button>
+            {/if}
+            {#if user.username !== window.localStorage.getItem('username')}
+                <button on:click={handleFollowToggle}
+                        class:btnRed={followingStatus}
+                        class="followBtn text-sm py-1 mt-2 px-4">{ followingStatus ? 'Unfollow' : 'Follow' }
                 </button>
             {/if}
         </div>
@@ -87,6 +122,18 @@
         height: 100px !important;
         width: 100px !important;
         clip-path: circle();
+    }
+
+    .followBtn {
+        background-color: #0095f6;
+        color: white;
+        width: 120px;
+        border-radius: 3px;
+        margin-top: 1rem;
+    }
+
+    .btnRed {
+        background-color: #ed4956;
     }
 
     .img-container {

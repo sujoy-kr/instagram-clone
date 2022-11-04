@@ -18,6 +18,7 @@
         const response = await postAnUser(user)
         window.localStorage.setItem('token', response.token)
         window.localStorage.setItem('username', response.username)
+        window.localStorage.setItem('user_id', response.user_id)
         await goto('/')
     }
 </script>

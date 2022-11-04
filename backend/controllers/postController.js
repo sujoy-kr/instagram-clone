@@ -49,13 +49,15 @@ const getFeed = async (req, res) => {
                         image: user.image,
                     }
                     const postIDs = user.posts
-                    for (const id of postIDs) {
-                        const post = await Post.findOne({where: {post_id: id}})
-                        let postCopy = {
-                            ...post.dataValues
+                    if (postIDs) {
+                        for (const id of postIDs) {
+                            const post = await Post.findOne({where: {post_id: id}})
+                            let postCopy = {
+                                ...post.dataValues
+                            }
+                            postCopy.owner = userCopy
+                            feed.push(postCopy)
                         }
-                        postCopy.owner = userCopy
-                        feed.push(postCopy)
                     }
                 }
                 feed.sort((a, b) => {
