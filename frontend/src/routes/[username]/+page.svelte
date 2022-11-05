@@ -85,11 +85,15 @@
             <li class="text-md text-center leading-5 text-slate-600"><b>{user.posts ? user.posts.length : 0}</b> <br>
                 posts
             </li>
-            <li class="text-md text-center leading-5 text-slate-600"><b>{user.followers ? user.followers.length : 0}</b>
+            <li
+                    on:click={() => goto(`/${user.username}/followers`)}
+                    class="text-md text-center leading-5 text-slate-600 cursor-pointer">
+                <b>{user.followers ? user.followers.length : 0}</b>
                 <br>
                 followers
             </li>
-            <li class="text-md text-center leading-5 text-slate-600">
+            <li on:click={() => goto(`/${user.username}/followings`)}
+                class="text-md text-center leading-5 text-slate-600 cursor-pointer">
                 <b>{user.followings ? user.followings.length : 0}</b>
                 <br>
                 following

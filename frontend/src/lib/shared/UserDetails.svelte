@@ -6,7 +6,7 @@
 
 <li on:click={() => {goto(`/${user.username}`)}}
     class="flex rounded-md p-2 gap-4 w-72 m-auto cursor-pointer">
-    <img class="profile-pic" src={user.image? `${baseUrl}/${user.image}`: './shrek.jpg'} alt="{user.name}">
+    <img class="profile-pic" src={user.image? `${baseUrl}/${user.image}`: '../shrek.jpg'} alt="{user.name}">
     <div>
         <h3 class="text-md">{user.username}</h3>
         <p class="text-sm text-slate-400">{user.name}</p>
