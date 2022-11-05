@@ -269,6 +269,66 @@ const getSearchedUsers = async (req, res) => {
     }
 }
 
+const getFollowings = async (req, res) => {
+    const username = req.params.username
+    const user = await User.findOne({
+        where: {
+            username
+        }
+    })
+
+    if (user) {
+        if (user.followings) {
+            const followings = await User.findAll({
+                where: {
+                    user_id: {
+                        [Op.in]: user.followings
+                    }
+                },
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            })
+            res.status(200).json(followings)
+        } else {
+            res.status(200).json([])
+        }
+
+    } else {
+        res.status(404).json({message: 'user not found'})
+    }
+}
+
+const getFollowers = async (req, res) => {
+    const username = req.params.username
+    const user = await User.findOne({
+        where: {
+            username
+        }
+    })
+
+    if (user) {
+        if (user.followers) {
+            const followings = await User.findAll({
+                where: {
+                    user_id: {
+                        [Op.in]: user.followers
+                    }
+                },
+                order: [
+                    ['createdAt', 'DESC']
+                ]
+            })
+            res.status(200).json(followings)
+        } else {
+            res.status(200).json([])
+        }
+
+    } else {
+        res.status(404).json({message: 'user not found'})
+    }
+}
+
 module.exports = {
     getAllUser,
     postUser,
@@ -277,5 +337,7 @@ module.exports = {
     followToggle,
     updateUser,
     getLastTenUsers,
-    getSearchedUsers
+    getSearchedUsers,
+    getFollowings,
+    getFollowers
 }

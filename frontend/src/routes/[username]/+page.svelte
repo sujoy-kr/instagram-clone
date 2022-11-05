@@ -18,7 +18,6 @@
     const trackUsernameChange = async (username) => {
         try {
             user = await userByUsername(username)
-            console.log(user)
             loading = false
         } catch (e) {
             loading = false
@@ -32,14 +31,12 @@
 
     $: if (user && user.followers) {
         followingStatus = user.followers.includes(+user_id)
-        console.log(followingStatus)
     }
 
     const handleFollowToggle = async () => {
         try {
             await toggleFollow(user.username)
             user = await userByUsername(username)
-            console.log(user)
         } catch (e) {
             console.log(e)
         }

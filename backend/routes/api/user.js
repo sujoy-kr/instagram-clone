@@ -11,5 +11,7 @@ router.put('/:username', auth.required, multerMiddleware, userController.updateU
 router.post('/login', userController.loginUser)
 router.get('/:username', userController.getUserByUsername)
 router.get('/:username/follow', auth.required, userController.followToggle)
+router.get('/followings/:username', auth.required, userController.getFollowings)
+router.get('/followers/:username', auth.required, userController.getFollowers)
 
 module.exports = router
