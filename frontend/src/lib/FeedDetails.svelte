@@ -10,6 +10,15 @@
         <a href="/{post.owner.username}" class="text-sm">{post.owner.username}</a>
     </div>
     <img class="" src="{baseUrl}/{post.url}" alt={post.owner.username}/>
+    {#if post.title}
+        <figcaption class="p-2">
+            <p class="text-sm"><a class="font-semibold tracking-wide" href="/{post.owner.username}">
+                {post.owner.username}
+            </a>
+                {post.title}
+            </p>
+        </figcaption>
+    {/if}
 </figure>
 
 <style>

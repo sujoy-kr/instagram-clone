@@ -17,6 +17,8 @@
 <div class="flex justify-center p-4">
     <form method="post" on:submit={handlePost} enctype="multipart/form-data"
           class="p-4 text-center rounded-md shadow-md bg-white max-w-fit">
+        <input type="text" name="title" class="mb-4 text-sm focus:outline-none rounded-md bg-slate-100 p-2 w-full"
+               placeholder="Post title"/>
         <input type="file" name="image" class="block mb-4" required/>
 
         <button

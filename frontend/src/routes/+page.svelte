@@ -18,7 +18,6 @@
 
 </script>
 
-
 {#if loading}
     <p class="text-center text-3xl text-slate-500 py-20">
         Loading ...
@@ -31,4 +30,3 @@
 
     <UsersList/>
 {/if}
-

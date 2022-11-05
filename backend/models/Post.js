@@ -23,6 +23,34 @@ module.exports = (sequelize, DataTypes) => {
                 notEmpty: true,
             }
         },
+        title: {
+            type: DataTypes.STRING,
+            allowNull: true
+        },
+        likes: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            defaultValue: 0,
+            validate: {
+                notEmpty: true,
+            }
+        },
+        // comments field will be an array of object
+        comments: {
+            type: DataTypes.ARRAY(DataTypes.JSON),
+            allowNull: true,
+            defaultValue: []
+        }
+
+        // comments: {
+        //     type: DataTypes.STRING,
+        //     get: function () {
+        //         return JSON.parse(this.getDataValue('comments'))
+        //     },
+        //     set: function (val) {
+        //         return this.setDataValue('comments', JSON.stringify(val))
+        //     }
+        // }
     },
     {
         freezeTableName: true,

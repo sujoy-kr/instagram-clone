@@ -16,7 +16,9 @@ const createPost = async (req, res) => {
     if (req.file) {
         const url = req.file.path
         try {
-            const post = await Post.create({url, user_id: user.user_id})
+
+            const title = req.body.title
+            const post = await Post.create({url, title, user_id: user.user_id})
             const postUser = await User.findOne({where: {user_id: user.user_id, username: user.username}})
 
             if (postUser.posts) {
