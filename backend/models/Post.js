@@ -28,12 +28,9 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: true
         },
         likes: {
-            type: DataTypes.INTEGER,
-            allowNull: false,
-            defaultValue: 0,
-            validate: {
-                notEmpty: true,
-            }
+            type: DataTypes.ARRAY(DataTypes.INTEGER),
+            allowNull: true,
+            defaultValue: []
         },
         // comments field will be an array of object
         comments: {

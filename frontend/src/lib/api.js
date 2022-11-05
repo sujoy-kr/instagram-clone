@@ -100,3 +100,12 @@ export async function getFeed() {
     return response.data
 }
 
+export async function toggleLike(id) {
+    const response = await axios.get(`${baseUrl}/api/post/${id}/like`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+    return response.data
+}

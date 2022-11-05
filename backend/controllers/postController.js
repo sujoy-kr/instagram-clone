@@ -78,8 +78,46 @@ const getFeed = async (req, res) => {
     }
 }
 
+const toggleLike = async (req, res) => {
+    try {
+        const user = req.user
+        const post_id = req.params.id
+        const currentUser = await User.findOne({where: {user_id: user.user_id, username: user.username}})
+        if (currentUser) {
+            const post = await Post.findOne({where: {post_id}})
+            if (post) {
+                if (post.likes) {
+                    if (post.likes.includes(currentUser.user_id)) {
+                        const newLikes = post.likes.filter(id => id !== currentUser.user_id)
+                        await post.update({likes: newLikes})
+                        await post.save()
+                        res.status(200).json(post)
+                    } else {
+                        const newLikes = [...post.likes, currentUser.user_id]
+                        await post.update({likes: newLikes})
+                        await post.save()
+                        res.status(200).json(post)
+                    }
+                } else {
+                    const likes = [currentUser.user_id]
+                    post.likes = likes
+                    await post.save()
+                    res.status(200).json(post)
+                }
+            } else {
+                res.status(404).json({message: 'post not found'})
+            }
+        } else {
+            res.status(404).json({message: 'user not found'})
+        }
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+}
+
 module.exports = {
     getAllPosts,
     createPost,
-    getFeed
+    getFeed,
+    toggleLike
 }
