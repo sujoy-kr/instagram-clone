@@ -38,7 +38,7 @@
         <a href="/{post.owner.username}" class="text-sm">{post.owner.username}</a>
     </div>
     <!-- post picture-->
-    <img class="cursor-pointer" on:click={() => goto(`/post/${post.post_id}`)} fireEvent={!full}
+    <img class="cursor-pointer" on:click={() => goto(`/post/${post.post_id}`)}
          src="{baseUrl}/{post.url}"
          alt={post.owner.username}/>
     <div class="flex p-3 gap-4">
@@ -58,7 +58,7 @@
 
         </button>
         <svg on:click={() => goto(`/post/${post.post_id}`)}
-             fireEvent={!full} aria-label="Comment" class="_ab6- cursor-pointer" color="#262626" fill="#262626"
+             aria-label="Comment" class="_ab6- cursor-pointer" color="#262626" fill="#262626"
              height="24"
              role="img"
              viewBox="0 0 24 24" width="24">
@@ -82,8 +82,8 @@
     {/if}
 
     {#if post.comments.length > 0}
-        <p class="pb-2 pt-0 px-3 text-sm text-slate-400 cursor-pointer" on:click={() => goto(`/post/${post.post_id}`)}
-           fireEvent={!full}>{full ? `${post.comments.length}
+        <p class="pb-2 pt-0 px-3 text-sm text-slate-400 cursor-pointer"
+           on:click={() => goto(`/post/${post.post_id}`)}>{full ? `${post.comments.length}
             comments` : `View all ${post.comments.length}
             comments`}</p>
     {/if}

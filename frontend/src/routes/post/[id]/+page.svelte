@@ -28,7 +28,7 @@
     </p>
 
 {:else if post && !loading}
-    <ul class="max-w-lg mx-auto py-8">
+    <ul class="container mx-auto pt-8 pb-4">
         <li>
             <FeedDetails {post} full={true}/>
         </li>
