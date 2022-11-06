@@ -17,6 +17,7 @@
     const handleLogOut = () => {
         window.localStorage.removeItem('token')
         window.localStorage.removeItem('username')
+        window.localStorage.removeItem('user_id')
         goto('/login')
     }
 

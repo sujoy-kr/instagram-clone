@@ -90,6 +90,17 @@ export async function postAPost(post) {
     return response.data
 }
 
+export async function getPostById(id) {
+    const response = await axios.get(`${baseUrl}/api/post/${id}`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+    return response.data
+}
+
+
 export async function getFeed() {
     const response = await axios.get(`${baseUrl}/api/post/feed`,
         {
@@ -102,6 +113,16 @@ export async function getFeed() {
 
 export async function toggleLike(id) {
     const response = await axios.get(`${baseUrl}/api/post/${id}/like`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+    return response.data
+}
+
+export async function updatePost(id, post) {
+    const response = await axios.put(`${baseUrl}/api/post/${id}`, post,
         {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')

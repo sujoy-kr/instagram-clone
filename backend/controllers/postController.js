@@ -115,9 +115,74 @@ const toggleLike = async (req, res) => {
     }
 }
 
+const updatePost = async (req, res) => {
+    try {
+        const user = req.user
+        const post_id = req.params.id
+        const currentUser = await User.findOne({where: {user_id: user.user_id, username: user.username}})
+        if (currentUser) {
+            const post = await Post.findOne({where: {post_id}})
+            if (post) {
+                const comment = req.body.comment
+                if (comment) {
+                    const comment = {
+                        username: currentUser.username,
+                        comment: req.body.comment
+                    }
+                    if (post.comments) {
+                        const newComments = [...post.comments, comment]
+                        await post.update({comments: newComments})
+                        await post.save()
+                        res.status(200).json(post)
+                    } else {
+                        post.comments = [comment]
+                        await post.save()
+                        res.status(200).json(post)
+                    }
+                } else {
+                    res.status(400).json({message: 'no comment found'})
+                }
+            } else {
+                res.status(404).json({message: 'post not found'})
+            }
+        } else {
+            res.status(404).json({message: 'user not found'})
+        }
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+}
+
+const getPostById = async (req, res) => {
+    try {
+        const post_id = req.params.id
+        const post = await Post.findOne({where: {post_id}})
+        if (post) {
+            const postCopy =
+                {
+                    ...post.dataValues
+                }
+            const user = await User.findOne({where: {user_id: post.user_id}})
+            console.log(user)
+            const userCopy = {
+                username: user.username,
+                image: user.image,
+            }
+            postCopy.owner = userCopy
+            res.status(200).json(postCopy)
+        } else {
+            res.status(404).json({message: 'post not found'})
+        }
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+}
+
 module.exports = {
     getAllPosts,
     createPost,
     getFeed,
-    toggleLike
+    toggleLike,
+    updatePost,
+    getPostById
 }

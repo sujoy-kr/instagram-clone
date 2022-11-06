@@ -104,7 +104,7 @@
     <div class="flex flex-wrap max-w-4xl px-2 py-4 m-auto">
         {#if user.posts}
             {#each user.posts as post}
-                <figure class="img-container p-1.5">
+                <figure class="img-container p-1.5 cursor-pointer" on:click={() => goto(`/post/${post.post_id}`)}>
                     <img class="each-img m-auto" src="{baseUrl}/{post.url}" alt="{user.name}">
                 </figure>
             {/each}

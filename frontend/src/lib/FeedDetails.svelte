@@ -1,7 +1,9 @@
 <script>
     export let post = {}
+    export let full = false
     import {baseUrl} from '$lib/config.js'
-    import {toggleLike} from '$lib/api.js'
+    import {goto} from '$app/navigation'
+    import {toggleLike, updatePost} from '$lib/api.js'
     import {onMount} from 'svelte'
 
     let currentUserId = null;
@@ -18,6 +20,15 @@
         post.likes = newPost.likes
     }
 
+    let comment = null
+    const handleComment = async () => {
+        if (comment) {
+            const {post_id} = post
+            const newPost = await updatePost(post_id, {comment})
+            post.comments = newPost.comments
+            comment = null
+        }
+    }
 </script>
 
 <figure class="bg-white rounded-sm overflow-hidden mb-8">
@@ -26,7 +37,10 @@
              alt="{post.owner.username}">
         <a href="/{post.owner.username}" class="text-sm">{post.owner.username}</a>
     </div>
-    <img class="" src="{baseUrl}/{post.url}" alt={post.owner.username}/>
+    <!-- post picture-->
+    <img class="cursor-pointer" on:click={() => goto(`/post/${post.post_id}`)} fireEvent={!full}
+         src="{baseUrl}/{post.url}"
+         alt={post.owner.username}/>
     <div class="flex p-3 gap-4">
         <button on:click={handleLike}>
             {#if post.likes.includes(+currentUserId)}
@@ -43,7 +57,10 @@
             {/if}
 
         </button>
-        <svg aria-label="Comment" class="_ab6-" color="#262626" fill="#262626" height="24" role="img"
+        <svg on:click={() => goto(`/post/${post.post_id}`)}
+             fireEvent={!full} aria-label="Comment" class="_ab6- cursor-pointer" color="#262626" fill="#262626"
+             height="24"
+             role="img"
              viewBox="0 0 24 24" width="24">
             <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="none" stroke="currentColor"
                   stroke-linejoin="round" stroke-width="2"></path>
@@ -63,8 +80,38 @@
             </p>
         </figcaption>
     {/if}
-    <p class="pb-2 pt-0 px-3 text-sm text-slate-400 cursor-pointer">View all {post.comments.length}
-        comments</p>
+
+    {#if post.comments.length > 0}
+        <p class="pb-2 pt-0 px-3 text-sm text-slate-400 cursor-pointer" on:click={() => goto(`/post/${post.post_id}`)}
+           fireEvent={!full}>{full ? `${post.comments.length}
+            comments` : `View all ${post.comments.length}
+            comments`}</p>
+    {/if}
+    <hr>
+    <form on:submit|preventDefault={handleComment} class="flex justify-between">
+        <input class="w-full focus:outline-none text-sm px-3 py-2" type="text" placeholder="Add a comment..."
+               required
+               bind:value={comment}
+               name="comment">
+        <button class:postBtnActive={comment}
+                class="text-sm text-blue-200 ease-in-out transition font-semibold tracking-wider px-3 py-2">Post
+        </button>
+    </form>
+    {#if post.comments.length > 0 && full}
+        <hr class="mb-2">
+        <ul>
+            {#each post.comments as comment}
+                <li class="p-2 px-4">
+                    <p class="text-sm">
+                        <a class="font-semibold tracking-wide" href="/{comment.username}">
+                            {comment.username}
+                        </a>
+                        {comment.comment}
+                    </p>
+                </li>
+            {/each}
+        </ul>
+    {/if}
 </figure>
 
 <style>
@@ -73,6 +120,10 @@
         object-fit: cover;
         height: 40px;
         width: 40px;
+    }
+
+    .postBtnActive {
+        color: #63A6F7;
     }
 
     figure {
