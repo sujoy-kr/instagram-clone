@@ -47,7 +47,8 @@ const getInbox = async (req, res) => {
                     lastMessage
                 })
             }
-
+            // invert the array to show the latest message first
+            inbox = inbox.reverse()
             res.status(200).json(inbox)
 
         } else {
