@@ -132,9 +132,18 @@ export async function updatePost(id, post) {
 }
 
 // message API
-
 export async function getMessages(username) {
     const response = await axios.get(`${baseUrl}/api/message/${username}`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+    return response.data
+}
+
+export async function getInbox() {
+    const response = await axios.get(`${baseUrl}/api/message/inbox`,
         {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')

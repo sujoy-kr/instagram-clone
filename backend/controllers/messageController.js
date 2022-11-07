@@ -29,7 +29,37 @@ const getMessage = async (req, res) => {
     }
 }
 
+const getInbox = async (req, res) => {
+    try {
+        const {username: senderUsername} = req.user
+        const sender = await User.findOne({where: {username: senderUsername}})
+
+        if (sender) {
+
+            let inbox = []
+            for (let each of sender.messages) {
+                const user = await User.findOne({where: {username: each.with}})
+                const message = await Message.findOne({where: {message_id: each.message_id}})
+                const lastMessage = message.messages[message.messages.length - 1].message
+                inbox.push({
+                    username: user.username,
+                    image: user.image,
+                    lastMessage
+                })
+            }
+
+            res.status(200).json(inbox)
+
+        } else {
+            res.status(404).json({message: 'User not found'})
+        }
+    } catch (e) {
+        res.status(500).json({message: e.message})
+    }
+}
+
 module.exports = {
     getAllMessage,
-    getMessage
+    getMessage,
+    getInbox
 }
