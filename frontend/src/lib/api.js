@@ -130,3 +130,15 @@ export async function updatePost(id, post) {
         })
     return response.data
 }
+
+// message API
+
+export async function getMessages(username) {
+    const response = await axios.get(`${baseUrl}/api/message/${username}`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+    return response.data
+}

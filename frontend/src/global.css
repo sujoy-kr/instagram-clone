@@ -3,7 +3,7 @@
 body {
     font-family: 'Roboto', sans-serif;
     user-select: none;
-    background-color: #FAFAFA !important;
+    background-color: #FAFAFA;
     ms-overflow-style: none; /* Internet Explorer 10+ */
     scrollbar-width: none;
 }

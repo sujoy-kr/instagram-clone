@@ -7,6 +7,7 @@ const router = require('express').Router()
 
 router.use('/user', require('./user'))
 router.use('/post', require('./post'))
+router.use('/message', require('./message'))
 
 module.exports = router
 

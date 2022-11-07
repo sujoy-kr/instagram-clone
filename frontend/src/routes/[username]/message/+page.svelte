@@ -3,79 +3,72 @@
     import {page} from "$app/stores";
     import {goto} from "$app/navigation";
     import {baseUrl} from '$lib/config.js';
-
     import {io} from "socket.io-client"
+    import {getMessages} from '$lib/api.js';
 
-    const socket = io(baseUrl, {
-        transports: ['websocket'],
-
-    });
-
-    let messages = [
-        {text: "Hello", username: "aaaaaaaa"},
-        {text: "Hi", username: "bbbbbbbb"},
-        {text: "How are you?", username: "aaaaaaaa"},
-        {text: "I'm fine, thanks", username: "bbbbbbbb"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "Hello", username: "aaaaaaaa"},
-        {text: "Hi", username: "bbbbbbbb"},
-        {text: "How are you?", username: "aaaaaaaa"},
-        {text: "I'm fine, thanks", username: "bbbbbbbb"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "Hello", username: "aaaaaaaa"},
-        {text: "Hi", username: "bbbbbbbb"},
-        {text: "How are you?", username: "aaaaaaaa"},
-        {text: "I'm fine, thanks", username: "bbbbbbbb"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "Hello", username: "aaaaaaaa"},
-        {text: "Hi", username: "bbbbbbbb"},
-        {text: "How are you?", username: "aaaaaaaa"},
-        {text: "I'm fine, thanks", username: "bbbbbbbb"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "Hello", username: "aaaaaaaa"},
-        {text: "Hi", username: "bbbbbbbb"},
-        {text: "How are you?", username: "aaaaaaaa"},
-        {text: "I'm fine, thanks", username: "bbbbbbbb"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "Hello", username: "aaaaaaaa"},
-        {text: "Hi", username: "bbbbbbbb"},
-        {text: "How are you?", username: "aaaaaaaa"},
-        {text: "I'm fine, thanks", username: "bbbbbbbb"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-        {text: "this is a very long text for demo purpose", username: "aaaaaaaa"},
-    ]
+    $: messages = []
+    $: loading = true
 
     // gets the username from the URL
     $: params = $page.params
     $: receiverUsername = params.username
 
     $: currentMessage = ''
+    $: token = ''
     $: senderUsername = ''
+    $: socket = null
 
     onMount(async () => {
+        let reqForMessages = await getMessages(receiverUsername)
+        messages = reqForMessages
+        loading = false
+
         senderUsername = localStorage.getItem('username') || ''
+        token = localStorage.getItem('token') || ''
 
-        socket.on("connect", () => {
-            console.log("connected")
-        })
+        if (senderUsername === receiverUsername) {
+            await goto('/chat')
+        }
 
-        socket.on("message", (data) => {
-            console.log(data)
-        })
+        if (token) {
+            socket = io.connect(baseUrl, {
+                query: {
+                    token
+                }
+            })
 
-        socket.on("disconnect", () => {
-            console.log("disconnected")
-        })
+            socket.on('connect', () => {
+                console.log('websocket connected')
+            })
+
+            socket.on('message', (data) => {
+                if (messages.length > 0) {
+                    messages = [...messages, data]
+                } else {
+                    messages = [data]
+                }
+            })
+        }
     })
 
     const handleMessage = () => {
-        if (currentMessage) {
-            socket.emit("message", currentMessage)
+        if (currentMessage && senderUsername && receiverUsername) {
+            const message = {
+                senderUsername,
+                receiverUsername,
+                message: currentMessage
+            }
+
+            const res = socket.emit('message', message)
+
+            if (res.connected) {
+                if (messages.length > 0) {
+                    messages = [...messages, message]
+                } else {
+                    messages = [message]
+                }
+            }
+
             currentMessage = ''
         }
     }
@@ -90,15 +83,21 @@
         </svg>
     </button>
     <h1 on:click={() => goto(`/${receiverUsername}`)}
-        class="cursor-pointer font-semibold tracking-wider">{receiverUsername}</h1>
+        class="cursor-pointer font-semibold text-sm tracking-wider">{receiverUsername}</h1>
 </div>
 
 <div class="p-8 m-auto">
-    {#if messages.length > 0}
+
+    {#if loading}
+        <h1 class="text-center mb-4 text-2xl text-slate-500">
+            Loading ...
+        </h1>
+
+    {:else if messages.length > 0 && !loading}
         <ul>
             {#each messages as message}
-                <li class:myText={message.username === senderUsername}
-                    class="message px-4 p-2.5 mb-4 w-fit text-slate-600 text-sm">{message.text}</li>
+                <li class:myText={message.senderUsername === senderUsername}
+                    class="message px-4 p-2.5 mb-4 w-fit text-slate-600 text-sm overflow-hidden">{message.message}</li>
             {/each}
         </ul>
     {:else}
@@ -108,10 +107,10 @@
     {/if}
 </div>
 <form on:submit|preventDefault={handleMessage} class="flex justify-between message-form h-16">
-    <input class="w-full focus:outline-none text-sm px-3 py-2" type="text" placeholder="Add a comment..."
+    <input class="w-full focus:outline-none text-sm px-3 py-2" type="text" placeholder="Message..."
            required
            bind:value={currentMessage}
-           name="comment">
+           name="message">
     <button class:postBtnActive={currentMessage}
             class="text-sm text-blue-200 ease-in-out transition font-semibold tracking-wider px-3 py-2">Send
     </button>
@@ -120,23 +119,27 @@
 <style>
 
     .username-goback {
-        border: 1px solid #b7c3d0;
+        border-bottom: 1px solid rgba(183, 195, 208, 0.5);
         position: fixed;
         top: 0;
         left: 0;
         right: 0;
-        background-color: #fff;
+        background-color: #FAFAFA;
         z-index: 9999999;
     }
 
-    .message-form {;
-        border: 1px solid #b7c3d0;
+    .message-form {
+        border-top: 1px solid rgba(183, 195, 208, 0.5);
         position: fixed;
         bottom: 0;
         left: 0;
         right: 0;
-        background-color: #fff;
+        background-color: #FAFAFA;
         z-index: 9999999;
+    }
+
+    .message-form input {
+        background-color: #FAFAFA;
     }
 
     .postBtnActive {
@@ -146,11 +149,12 @@
     .message {
         border-radius: 25px;
         max-width: 200px;
+        word-wrap: break-word;
         border: 1px solid #E0E7EF;
     }
 
     .myText {
-        background-color: #EFEFEF;
+        background-color: rgb(239, 239, 239);
         align-self: flex-end;
         border: none;
         margin-left: auto;
