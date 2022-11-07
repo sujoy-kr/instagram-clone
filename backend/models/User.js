@@ -84,6 +84,10 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             allowNull: true,
 
+        },
+        messages: {
+            type: DataTypes.ARRAY(DataTypes.JSON),
+            allowNull: true,
         }
     },
     {

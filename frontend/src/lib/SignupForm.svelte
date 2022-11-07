@@ -35,7 +35,7 @@
            placeholder="Username"/>
     <input class="text-sm focus:outline-none rounded-md bg-slate-100 p-2 mb-2" type="password" name="password"
            placeholder="Password"/>
-    <button class="p-2 mb-8 text-sm bg-blue-500 rounded-md text-white font-semibold" type="submit">Log In</button>
+    <button class="p-2 mb-8 text-sm bg-blue-500 rounded-md text-white font-semibold" type="submit">Sign up</button>
     <hr>
     <span class="text-xs font-semibold text-slate-400 m-auto">OR</span>
     <p class="text-slate-500 text-sm text-center m-2">Have an account? <a class="text-sm text-blue-500 font-semibold"

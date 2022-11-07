@@ -11,6 +11,7 @@ const JWT_KEY = process.env.JWT_KEY
 // putting + in front of strings turn them into integers
 const SALT_ROUND = +process.env.SALT_ROUND
 const BCRYPT_PASS = process.env.BCRYPT_PASS
+const CORS_ORIGIN = process.env.CORS_ORIGIN
 
 module.exports = {
     PORT,
@@ -21,5 +22,6 @@ module.exports = {
     DB_HOST,
     JWT_KEY,
     SALT_ROUND,
-    BCRYPT_PASS
+    BCRYPT_PASS,
+    CORS_ORIGIN
 }
