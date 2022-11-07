@@ -40,7 +40,7 @@ const socketServer = async (server) => {
                     }
 
                     const existingChat = await senderUser.messages.find((chat) => {
-                        return chat.with = receiverUser.username
+                        return chat.with === receiverUser.username
                     })
 
                     if (existingChat) {

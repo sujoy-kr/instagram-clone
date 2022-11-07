@@ -67,10 +67,15 @@
                 </button>
             {/if}
             {#if user.username !== window.localStorage.getItem('username')}
-                <button on:click={handleFollowToggle}
-                        class:btnRed={followingStatus}
-                        class="followBtn text-sm py-1 mt-2 px-4">{ followingStatus ? 'Unfollow' : 'Follow' }
-                </button>
+                <div class="mt-4 flex items-center min-w-fit gap-4">
+                    <button on:click={handleFollowToggle}
+                            class:btnRed={followingStatus}
+                            class="followBtn text-sm py-1 px-4">{ followingStatus ? 'Unfollow' : 'Follow' }
+                    </button>
+                    <button class="cursor-pointer" on:click={() => goto(`/${user.username}/message`)}>
+                        <img src="./send.png" alt="Send message">
+                    </button>
+                </div>
             {/if}
         </div>
     </div>
@@ -124,7 +129,6 @@
         color: white;
         width: 120px;
         border-radius: 3px;
-        margin-top: 1rem;
     }
 
     .btnRed {
