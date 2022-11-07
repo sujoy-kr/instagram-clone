@@ -34,18 +34,13 @@
     }
 
     const handleFollowToggle = async () => {
-        try {
-            await toggleFollow(user.username)
-            user = await userByUsername(username)
-        } catch (e) {
-            console.log(e)
-        }
+        await toggleFollow(user.username)
+        user = await userByUsername(username)
     }
 
     onMount(async () => {
         user_id = localStorage.getItem('user_id')
     })
-
 
 </script>
 
@@ -116,7 +111,6 @@
     <p class="text-center text-2xl text-slate-600 pb-20">Page Not Found</p>
 {/if}
 
-
 <style>
     .profile-pic {
         object-fit: cover;
@@ -170,7 +164,5 @@
             margin-top: .25rem;
         }
     }
-
-
 </style>
 

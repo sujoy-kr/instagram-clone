@@ -32,7 +32,7 @@
 </script>
 
 <figure class="bg-white rounded-sm overflow-hidden mb-8">
-    <div class="flex p-2 items-center gap-4">
+    <div class="flex p-3 items-center gap-3">
         <img class="profile-pic" src={post.owner.image? `${baseUrl}/${post.owner.image}`:"/shrek.jpg"}
              alt="{post.owner.username}">
         <a href="/{post.owner.username}" class="text-sm">{post.owner.username}</a>

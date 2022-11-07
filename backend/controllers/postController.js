@@ -163,7 +163,6 @@ const getPostById = async (req, res) => {
                     ...post.dataValues
                 }
             const user = await User.findOne({where: {user_id: post.user_id}})
-            console.log(user)
             const userCopy = {
                 username: user.username,
                 image: user.image,
