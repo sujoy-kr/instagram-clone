@@ -15,8 +15,8 @@
             loadLastTen = true
         }
     });
-
 </script>
+
 
 {#if loading}
     <p class="text-center text-3xl text-slate-500 py-20">
@@ -27,6 +27,5 @@
 {/if}
 
 {#if !loading && loadLastTen}
-
     <UsersList/>
 {/if}

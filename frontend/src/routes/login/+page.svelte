@@ -1,5 +1,4 @@
 <script>
-	import LoginForm from '$lib/LoginForm.svelte';
-
+    import LoginForm from '$lib/LoginForm.svelte';
 </script>
-<LoginForm />
+<LoginForm/>

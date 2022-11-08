@@ -2,6 +2,21 @@
     import {postAnUser} from '$lib/api.js'
     import {goto} from "$app/navigation";
 
+    // for error notification
+    import PopNotification from '$lib/shared/PopNotification.svelte'
+
+    let notification = ''
+    let isError = true
+
+    const handleNotification = (message, errorStatus = true) => {
+        notification = message
+        isError = errorStatus
+        setTimeout(() => {
+            notification = ''
+            isError = true
+        }, 3000)
+    }
+
     const userFactory = (username, name, email, password) => {
         return {
             username,
@@ -14,15 +29,27 @@
     const handleSignIn = async (e) => {
         const formData = new FormData(e.target)
         const {email, name, username, password} = Object.fromEntries(formData.entries())
+        if (!email || !name || !username || !password) {
+            return handleNotification('Please fill all the fields')
+        }
+        if (password.length < 8) {
+            return handleNotification('Password must be at least 8 characters long')
+        }
+
         const user = userFactory(username, name, email, password)
-        const response = await postAnUser(user)
-        window.localStorage.setItem('token', response.token)
-        window.localStorage.setItem('username', response.username)
-        window.localStorage.setItem('user_id', response.user_id)
+        try {
+            const response = await postAnUser(user)
+            window.localStorage.setItem('token', response.token)
+            window.localStorage.setItem('username', response.username)
+            window.localStorage.setItem('user_id', response.user_id)
+        } catch (e) {
+            return handleNotification(e.response.data.message)
+        }
         await goto('/')
     }
 </script>
 
+<PopNotification message={notification} isError={isError}/>
 <form class="flex flex-col p-4 w-80 m-auto" on:submit|preventDefault={handleSignIn}>
     <figure>
         <img src="./instagram.png" class="w-36 m-auto my-5" alt="Instagram logo">
