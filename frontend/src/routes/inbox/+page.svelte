@@ -9,7 +9,6 @@
     onMount(async () => {
         inbox = await getInbox()
         loading = false
-        console.log(inbox)
     })
 </script>
 

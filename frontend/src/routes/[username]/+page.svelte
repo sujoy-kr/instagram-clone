@@ -42,6 +42,7 @@
         user_id = localStorage.getItem('user_id')
     })
 
+
 </script>
 
 {#if loading}
@@ -111,9 +112,14 @@
         {/if}
     </div>
 {:else}
-    <p class="text-center text-3xl text-slate-600 pt-20 pb-2">¯\_(ツ)_/¯</p>
-    <p class="text-center text-8xl font-semibold text-slate-600">404</p>
-    <p class="text-center text-2xl text-slate-600 pb-20">Page Not Found</p>
+    <!--    <p class="text-center text-3xl text-slate-600 pt-20 pb-2">¯\_(ツ)_/¯</p>-->
+    <!--    <p class="text-center text-8xl font-semibold text-slate-600">404</p>-->
+    <!--    <p class="text-center text-2xl text-slate-600 pb-20">Page Not Found</p>-->
+    <div class="p-4">
+        <p class="text-center text-6xl font-semibold text-slate-600 mb-4">404</p>
+        <p class="text-center text-xl text-slate-600">They don't know this page doesn't exist.</p>
+        <img class="w-full m-auto max-w-2xl" src="/404.png" alt="">
+    </div>
 {/if}
 
 <style>

@@ -1,7 +1,7 @@
 const {PORT} = require('./utils/env_config')
 const app = require('./app')
 
-const socketServer = require('./listeners/messageSocket')
+const socketServer = require('./listeners/socketServer')
 
 const db = require('./models')
 
@@ -15,7 +15,7 @@ const server = http.createServer(app);
         await db.sequelize.sync()
 
         // start socket server
-        socketServer(server)
+        await socketServer(server)
 
         // start http server
         server.listen(PORT, () => {
