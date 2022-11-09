@@ -49,9 +49,9 @@
         senderUsername = localStorage.getItem('username') || ''
         token = localStorage.getItem('token') || ''
 
-        // if (senderUsername === receiverUsername) {
-        //     await goto('/inbox')
-        // }
+        if (senderUsername === receiverUsername) {
+            await goto('/inbox')
+        }
 
         if (token) {
             socket = io.connect(baseUrl, {
