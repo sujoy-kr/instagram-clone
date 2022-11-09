@@ -5,6 +5,8 @@
     import {baseUrl} from '$lib/config.js';
     import {io} from "socket.io-client"
     import {getMessages} from '$lib/api.js';
+    import {scale} from 'svelte/transition';
+    import PopNotification from "$lib/shared/PopNotification.svelte";
 
     $: messages = []
     $: loading = true
@@ -19,10 +21,24 @@
     $: socket = null
     $: innerHeight = 0
 
+    let notification = ''
+    let isError = true
+
+    const handleNotification = (message, errorStatus = true) => {
+        notification = message
+        isError = errorStatus
+        setTimeout(() => {
+            notification = ''
+            isError = true
+        }, 3000)
+    }
+
+
     let elementToScroll
     const scrollToBottom = async (node) => {
-        console.log(node)
-        node.scroll({top: node.scrollHeight, behavior: 'smooth'});
+        if (node) {
+            node.scroll({top: node.scrollHeight, behavior: 'smooth'});
+        }
     };
 
     onMount(async () => {
@@ -68,6 +84,10 @@
 
 
     const handleMessage = () => {
+        if (currentMessage.trim() === '') {
+            return handleNotification('Message cannot be empty', true)
+        }
+
         if (currentMessage && senderUsername && receiverUsername) {
             const message = {
                 senderUsername,
@@ -94,6 +114,8 @@
 
 <svelte:window bind:innerHeight={innerHeight}/>
 
+
+<PopNotification message={notification} isError={isError}/>
 <div class="h-16 p-4 flex items-center gap-4 fixed top-0 username-goback">
     <button class="cursor-pointer" on:click={() => goto('/inbox')}>
         <svg aria-label="Back" class="_ab6- -rotate-90" color="#262626" fill="#262626" height="24" role="img"
@@ -114,9 +136,10 @@
 
     {:else if messages.length > 0 && !loading}
         <!--        innerHeight - 128, because 128 is the height of the header and the footer combined-->
-        <ul class="p-8 pb-0 m-auto" style="height:{innerHeight - 128}px;overflow:auto;" bind:this={elementToScroll}>
+        <ul class="p-4 pt-6 pb-0 m-auto" style="height:{innerHeight - 128}px;overflow:auto;"
+            bind:this={elementToScroll}>
             {#each messages as message}
-                <li class:myText={message.senderUsername === senderUsername}
+                <li in:scale class:myText={message.senderUsername === senderUsername}
                     class="message px-4 p-2.5 mb-4 w-fit text-slate-600 text-sm overflow-hidden">{message.message}</li>
             {/each}
         </ul>
@@ -128,7 +151,6 @@
 </div>
 <form on:submit|preventDefault={handleMessage} class="flex justify-between message-form h-16">
     <input class="w-full focus:outline-none text-sm px-3 py-2" type="text" placeholder="Message..."
-           required
            bind:value={currentMessage}
            name="message">
     <button class:postBtnActive={currentMessage}
