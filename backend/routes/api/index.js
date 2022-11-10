@@ -8,6 +8,7 @@ const router = require('express').Router()
 router.use('/user', require('./user'))
 router.use('/post', require('./post'))
 router.use('/message', require('./message'))
+router.use('/notification', require('./notification'))
 
 module.exports = router
 

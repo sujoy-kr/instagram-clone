@@ -22,7 +22,7 @@
         const data = new FormData(e.target);
 
         // check if image exists
-        if (data.get('image')) {
+        if (data.get('image').size === 0) {
             return handleNotification('Please select an image')
 
         }

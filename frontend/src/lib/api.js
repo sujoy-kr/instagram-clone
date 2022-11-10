@@ -151,3 +151,14 @@ export async function getInbox() {
         })
     return response.data
 }
+
+// notification API
+export async function getNotifications() {
+    const response = await axios.get(`${baseUrl}/api/notification`,
+        {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+    return response.data
+}

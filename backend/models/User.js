@@ -83,12 +83,15 @@ module.exports = (sequelize, DataTypes) => {
         followings: {
             type: DataTypes.ARRAY(DataTypes.INTEGER),
             allowNull: true,
-
         },
         messages: {
             type: DataTypes.ARRAY(DataTypes.JSON),
             allowNull: true,
             defaultValue: []
+        },
+        notification_id: {
+            type: DataTypes.INTEGER,
+            allowNull: true,
         }
     },
     {
@@ -101,6 +104,8 @@ module.exports = (sequelize, DataTypes) => {
         delete values.password
         delete values.updatedAt
         delete values.createdAt
+        delete values.messages
+
         return values
     }
 
