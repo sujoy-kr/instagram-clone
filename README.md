@@ -4,7 +4,7 @@ Explore my Instagram Clone project on [sujoykr.pages.dev](https://sujoykr.pages.
 
 ### Getting Started
 
-1. Clone the repository:
+Clone the repository:
    ```console
    git clone https://github.com/yourusername/instagram-clone.git
    ```
