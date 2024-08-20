@@ -6,5 +6,5 @@ Explore my Instagram Clone project on [sujoykr.pages.dev](https://sujoykr.pages.
 
 Clone the repository:
    ```console
-   git clone https://github.com/yourusername/instagram-clone.git
+   git clone https://github.com/sujoy-kr/instagram-clone.git
    ```
